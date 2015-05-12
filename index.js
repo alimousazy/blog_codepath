@@ -6,6 +6,7 @@ let crypto = require('crypto');
 let cookieParser = require('cookie-parser')
 let session = require('express-session')
 let FileStore = require('session-file-store')(session);
+let fs       = require('fs');
 let passport = require('passport')
 let flash = require('connect-flash')
 let mongoose = require('mongoose')
@@ -23,6 +24,11 @@ app.passport = passport
 app.use(morgan('dev'))
 app.use(express.static(__dirname + '/'));
 
+try {
+fs.mkdirSync('./uploads');
+}
+catch (e) {
+}
 app.use(multer({ dest: './uploads/',
  rename: function (fieldname, filename) {
     let shasum = crypto.createHash('sha1');
