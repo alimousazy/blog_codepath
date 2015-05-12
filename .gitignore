@@ -1,6 +1,5 @@
 logs
 *.log
-uploads/
 
 # Runtime data
 pids
