@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <title>Authenticator</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body         { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-user"></span> Profile Page</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="well">
+            <h3><span class="fa fa-laptop"></span> Local</h3>
+            <table>
+              <tr>
+                <td>title</td>
+                <td>Creation date</td>
+                <td>image</td>
+                <td>Comment count</td>
+                <td></td>
+                <td></td>
+              </tr>
+            <% for(var x in  posts) {%>
+              <tr>
+               <td><%= posts[x]['title'] %></td>
+               <td><%= posts[x]['content'] %></td>
+               <td><img src="/<%= posts[x]['image'] %>" /></td> 
+               <td><%= posts[x]['update_date'] %></td>
+               <td></td>
+               <td></td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  Comments ----------------------
+                </td>
+              </tr>
+              <% for(var l in  posts[x].comments) {%>
+              <tr>
+                <td colspan="2">
+                  <%= posts[x].comments[l].body %>
+                </td>
+                <td colspan="2">
+                  <%= posts[x].comments[l].date %>
+                </td>
+                <td colspan="2">
+                  <%= posts[x].comments[l].user %>
+                </td>
+              </tr>
+              <% } %>
+              <tr  align="center"> 
+                <td colspan="6" align="center">
+                <form method="post" action="/blog/<%= user %>" >
+                  <input type="text" value="" name="comment" />
+                  <input type="hidden" name="p_id" value="<%= posts[x]['_id'] %>" />
+                  <input type="submit" value="add comment" />
+                </form>
+                </td>
+              </tr>
+           <% } %>
+         </table>
+        <a href="/post"> Create post </a> 
+        </div>
+
+</div>
+</body>
+</html>
